@@ -1,0 +1,88 @@
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+\usepackage[osf]{libertine} % Use the Libertine font
+\usepackage{expex} % for interlinear text, e.g. glossed text
+\usepackage{tikz-dependency} % for dependency trees
+\usepackage{pythontex}
+
+\usepackage{parallel}
+\usepackage{microtype} % Improves character and word spacing
+
+\usepackage[top=3cm,bottom=3cm,left=3cm,right=3cm,headsep=10pt,a4paper]{geometry} % Page margins
+
+%----------------------------------------------------------------------------------------
+% Commands to format Dependency Trees
+%----------------------------------------------------------------------------------------
+\newcommand{\grk}[1]{\color{blue}\textbf{#1}\color{black}}
+\newcommand{\eng}[1]{\color{burgundy}\textbf{#1}\color{black}}
+\newcommand{\opt}[1]{{[}#1{]}} % optional element
+\newcommand{\ver}[1]{\begin{center}\textbf{#1}\end{center}}
+% comment out two of the following three to control the defs
+%\newcommand*{\GrkOnly}{}
+%\newcommand*{\EngOnly}{}
+\newcommand*{\GrkEng}{}
+%\newcommand*{\GrkEngNbr}{}
+
+\ifdefined\GrkOnly
+	% regular node
+	\def\macrnode(#1,#2,#3,#4,#5){\node (is-root) {\grk{#2} \\ #3}} 
+	% shifted node (to left or to right)
+	\def\macnode(#1,#2,#3,#4,#5){node { \grk{#2} \\ #3 }} 
+	\def\macsnode(#1,#2,#3,#4,#5,#6,#7){node [#6=#7cm] { \grk{#2} \\ #3 }} 
+	% unordered node
+	\def\macunode(#1,#2,#3){node { \grk{#1} \\ #2}} 
+	% root, unordered node
+	\def\macrunode(#1,#2,#3){\node (is-root) { \grk{#1} \\ #2}} 
+	% shifted unordered node
+	\def\macsunode(#1,#2,#3,#4,#5){node [#4=#5cm] { \grk{#1} \\ #2}} 
+\fi
+
+\ifdefined\EngOnly
+	% regular node
+	\def\macrnode(#1,#2,#3,#4,#5){\node (is-root) {\eng{#5} \\ #3}} 
+	% shifted node (to left or to right)
+	\def\macnode(#1,#2,#3,#4,#5){node { \eng{#5} \\ #3 }} 
+	\def\macsnode(#1,#2,#3,#4,#5,#6,#7){node [#6=#7cm] { \eng{#5} \\ #3 }} 
+	% unordered node
+	\def\macunode(#1,#2,#3){node { \eng{#3} \\ #2}} 
+	% root, unordered node
+	\def\macrunode(#1,#2,#3){\node (is-root) { \eng{#3} \\ #2}} 
+	% shifted unordered node
+	\def\macsunode(#1,#2,#3,#4,#5){node [#4=#5cm] { \eng{#3} \\ #2}} 
+\fi
+
+\ifdefined\GrkEng
+	% root node
+	\def\macrnode(#1,#2,#3,#4,#5){\node (is-root) {\grk{#2} \\ #3 \\\eng{#5}}} 
+	% regular node
+	\def\macnode(#1,#2,#3,#4,#5){node {\grk{#2} \\ #3 \\ \eng{#5}}} 
+	% shifted node (to left or to right)
+	\def\macsnode(#1,#2,#3,#4,#5,#6,#7){node [#6=#7cm] {\grk{#2} \\ #3 \\\eng{#5}}} 
+	% unordered node
+	\def\macunode(#1,#2,#3){node { \grk{#1} \\ #2 \\ \eng{#3}}} 
+	% root, unordered node
+	\def\macrunode(#1,#2,#3){\node (is-root) { \grk{#1} \\ #2 \\ \eng{#3}}} 
+	% shifted unordered node
+	\def\macsunode(#1,#2,#3,#4,#5){node [#4=#5cm] { \grk{#1} \\ #2 \\ \eng{#3}}} 
+\fi
+
+\ifdefined\GrkEngNbr
+	%root node
+	\def\macrnode(#1,#2,#3,#4,#5){\node (is-root) { (#1) \grk{#2} \\ #3 \\ (#4) \eng{#5}}} 
+	% regular node
+	\def\macnode(#1,#2,#3,#4,#5){node { (#1) \grk{#2} \\ #3 \\ (#4) \eng{#5}}} 
+	% shifted node (to left or to right)
+	\def\macsnode(#1,#2,#3,#4,#5,#6,#7){node [#6=#7cm] { (#1) \grk{#2} \\ #3 \\ (#4) \eng{#5}}} 
+	% unordered node
+	\def\macunode(#1,#2,#3){node { \grk{#1} \\ #2 \\ \eng{#3}}} 
+	% root, unordered node
+	\def\macrunode(#1,#2,#3){\node (is-root) { \grk{#1} \\ #2 \\ \eng{#3}}} 
+	% shifted unordered node
+	\def\macsunode(#1,#2,#3,#4,#5){node [#4=#5cm] { \grk{#1} \\ #2 \\ \eng{#3}}} 
+\fi
+
+\definecolor{burgundy}{rgb}{0.5, 0.0, 0.13}
+\def\to(#1,#2){#1\textrightarrow #2}
+\def\from(#1,#2){#1\textleftarrow #2}
+\newcommand{\macref}[1]{(\getref{#1})}
+\newcommand{\macfullref}[1]{(\getfullref{#1})}
+\definelingstyle{ocmc}{glstyle=nlevel,extraglskip=1em}
